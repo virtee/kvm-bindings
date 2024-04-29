@@ -272,6 +272,7 @@ pub const KVM_ARM_VCPU_SVE: u32 = 4;
 pub const KVM_ARM_VCPU_PTRAUTH_ADDRESS: u32 = 5;
 pub const KVM_ARM_VCPU_PTRAUTH_GENERIC: u32 = 6;
 pub const KVM_ARM_VCPU_HAS_EL2: u32 = 7;
+pub const KVM_ARM_VCPU_REC: u32 = 8; /* VCPU REC state as part of Realm */
 pub const KVM_ARM_MAX_DBG_REGS: u32 = 16;
 pub const KVM_DEBUG_ARCH_HSR_HIGH_VALID: u32 = 1;
 pub const KVM_GUESTDBG_USE_SW_BP: u32 = 65536;
@@ -489,6 +490,7 @@ pub const KVM_VM_MIPS_VZ: u32 = 1;
 pub const KVM_VM_MIPS_TE: u32 = 2;
 pub const KVM_S390_SIE_PAGE_OFFSET: u32 = 1;
 pub const KVM_VM_TYPE_ARM_IPA_SIZE_MASK: u32 = 255;
+pub const KVM_VM_TYPE_ARM_REALM: u32 = (1 << 8) & (KVM_VM_TYPE_ARM_IPA_SIZE_MASK << 8);
 pub const KVM_CAP_IRQCHIP: u32 = 0;
 pub const KVM_CAP_HLT: u32 = 1;
 pub const KVM_CAP_MMU_SHADOW_CACHE_CONTROL: u32 = 2;
@@ -646,6 +648,16 @@ pub const KVM_CAP_HYPERV_CPUID: u32 = 167;
 pub const KVM_CAP_MANUAL_DIRTY_LOG_PROTECT2: u32 = 168;
 pub const KVM_CAP_PPC_IRQ_XIVE: u32 = 169;
 pub const KVM_CAP_ARM_SVE: u32 = 170;
+pub const KVM_CAP_ARM_RME: u32 = 300;
+pub const VM_CAP_ARM_RME_RPV_SIZE: u32 = 64;
+pub const KVM_CAP_ARM_RME_CONFIG_REALM: u64 = 0;
+pub const KVM_CAP_ARM_RME_CFG_HASH_ALGO: u64 = 1;
+pub const KVM_CAP_ARM_RME_MEASUREMENT_ALGO_SHA256: u32 = 0;
+pub const KVM_CAP_ARM_RME_CREATE_RD: u64 = 1;
+pub const KVM_ARM_RME_POPULATE_FLAGS_MEASURE: u32 = 1;
+pub const KVM_CAP_ARM_RME_POPULATE_REALM: u64 = 3;
+pub const KVM_CAP_ARM_RME_INIT_IPA_REALM: u64 = 2;
+pub const KVM_CAP_ARM_RME_ACTIVATE_REALM: u64 = 4;
 pub const KVM_CAP_ARM_PTRAUTH_ADDRESS: u32 = 171;
 pub const KVM_CAP_ARM_PTRAUTH_GENERIC: u32 = 172;
 pub const KVM_CAP_PMU_EVENT_FILTER: u32 = 173;
@@ -8289,3 +8301,62 @@ fn bindgen_test_layout_kvm_create_guest_memfd() {
     );
 }
 pub type __uint128_t = u128;
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union item {
+    pub rpv: [__u8; VM_CAP_ARM_RME_RPV_SIZE as usize],
+    pub hash_algo: __u32,
+    pub reserved: [__u8; 256],
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct kvm_cap_arm_rme_config_item {
+    pub cfg: __u64,
+    pub data: item,
+}
+impl Default for kvm_cap_arm_rme_config_item {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct kvm_cap_arm_rme_populate_realm_args {
+    pub populate_ipa_base: __u64,
+    pub populate_ipa_size: __u64,
+    pub flags: __u32,
+    pub reserved: [__u32; 3],
+}
+impl Default for kvm_cap_arm_rme_populate_realm_args {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct kvm_cap_arm_rme_init_ipa_args {
+    pub init_ipa_base: __u64,
+    pub init_ipa_size: __u64,
+    pub reserved: [__u32; 4],
+}
+impl Default for kvm_cap_arm_rme_init_ipa_args {
+    fn default() -> Self {
+        let mut s = ::std::mem::MaybeUninit::<Self>::uninit();
+        unsafe {
+            ::std::ptr::write_bytes(s.as_mut_ptr(), 0, 1);
+            s.assume_init()
+        }
+    }
+}
