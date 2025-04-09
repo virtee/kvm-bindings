@@ -357,6 +357,7 @@ pub const KVM_EXIT_RISCV_CSR: u32 = 36;
 pub const KVM_EXIT_NOTIFY: u32 = 37;
 pub const KVM_EXIT_LOONGARCH_IOCSR: u32 = 38;
 pub const KVM_EXIT_MEMORY_FAULT: u32 = 39;
+pub const KVM_EXIT_TDX: u32 = 40;
 pub const KVM_INTERNAL_ERROR_EMULATION: u32 = 1;
 pub const KVM_INTERNAL_ERROR_SIMUL_EX: u32 = 2;
 pub const KVM_INTERNAL_ERROR_DELIVERY_EV: u32 = 3;
@@ -8208,6 +8209,7 @@ pub union kvm_run__bindgen_ty_1 {
     pub riscv_csr: kvm_run__bindgen_ty_1__bindgen_ty_25,
     pub notify: kvm_run__bindgen_ty_1__bindgen_ty_26,
     pub memory_fault: kvm_run__bindgen_ty_1__bindgen_ty_27,
+    pub tdx: kvm_tdx_exit,
     pub padding: [::std::os::raw::c_char; 256usize],
 }
 #[repr(C)]
@@ -13244,3 +13246,206 @@ fn bindgen_test_layout_kvm_create_guest_memfd() {
         )
     );
 }
+
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct kvm_tdx_exit {
+    pub type_: __u32,
+    pub pad: __u32,
+    pub u: kvm_tdx_exit__bindgen_ty_1,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union kvm_tdx_exit__bindgen_ty_1 {
+    pub vmcall: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall {
+    pub __bindgen_anon_1: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_1,
+    pub __bindgen_anon_2: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_2,
+    pub __bindgen_anon_3: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_3,
+    pub in_r12: __u64,
+    pub in_r13: __u64,
+    pub in_r14: __u64,
+    pub in_r15: __u64,
+    pub in_rbx: __u64,
+    pub in_rdi: __u64,
+    pub in_rsi: __u64,
+    pub in_r8: __u64,
+    pub in_r9: __u64,
+    pub in_rdx: __u64,
+    pub __bindgen_anon_4: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_4,
+    pub out_r11: __u64,
+    pub out_r12: __u64,
+    pub out_r13: __u64,
+    pub out_r14: __u64,
+    pub out_r15: __u64,
+    pub out_rbx: __u64,
+    pub out_rdi: __u64,
+    pub out_rsi: __u64,
+    pub out_r8: __u64,
+    pub out_r9: __u64,
+    pub out_rdx: __u64,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_1 {
+    pub in_rcx: __u64,
+    pub reg_mask: __u64,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_1"]
+        [::std::mem::size_of::<kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_1>() - 8usize];
+    ["Alignment of kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_1"][::std::mem::align_of::<
+        kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_1,
+    >() - 8usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_1::in_rcx"][::std::mem::offset_of!(
+        kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_1,
+        in_rcx
+    )
+        - 0usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_1::reg_mask"][::std::mem::offset_of!(
+        kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_1,
+        reg_mask
+    )
+        - 0usize];
+};
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_2 {
+    pub in_r10: __u64,
+    pub type_: __u64,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_2"]
+        [::std::mem::size_of::<kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_2>() - 8usize];
+    ["Alignment of kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_2"][::std::mem::align_of::<
+        kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_2,
+    >() - 8usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_2::in_r10"][::std::mem::offset_of!(
+        kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_2,
+        in_r10
+    )
+        - 0usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_2::type_"][::std::mem::offset_of!(
+        kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_2,
+        type_
+    ) - 0usize];
+};
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_3 {
+    pub in_r11: __u64,
+    pub subfunction: __u64,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_3"]
+        [::std::mem::size_of::<kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_3>() - 8usize];
+    ["Alignment of kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_3"][::std::mem::align_of::<
+        kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_3,
+    >() - 8usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_3::in_r11"][::std::mem::offset_of!(
+        kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_3,
+        in_r11
+    )
+        - 0usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_3::subfunction"][::std::mem::offset_of!(
+        kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_3,
+        subfunction
+    )
+        - 0usize];
+};
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_4 {
+    pub out_r10: __u64,
+    pub status_code: __u64,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_4"]
+        [::std::mem::size_of::<kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_4>() - 8usize];
+    ["Alignment of kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_4"][::std::mem::align_of::<
+        kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_4,
+    >() - 8usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_4::out_r10"][::std::mem::offset_of!(
+        kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_4,
+        out_r10
+    )
+        - 0usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_4::status_code"][::std::mem::offset_of!(
+        kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall__bindgen_ty_4,
+        status_code
+    )
+        - 0usize];
+};
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall"]
+        [::std::mem::size_of::<kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall>() - 200usize];
+    ["Alignment of kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall"]
+        [::std::mem::align_of::<kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall>() - 8usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall::in_r12"]
+        [::std::mem::offset_of!(kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall, in_r12) - 24usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall::in_r13"]
+        [::std::mem::offset_of!(kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall, in_r13) - 32usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall::in_r14"]
+        [::std::mem::offset_of!(kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall, in_r14) - 40usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall::in_r15"]
+        [::std::mem::offset_of!(kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall, in_r15) - 48usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall::in_rbx"]
+        [::std::mem::offset_of!(kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall, in_rbx) - 56usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall::in_rdi"]
+        [::std::mem::offset_of!(kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall, in_rdi) - 64usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall::in_rsi"]
+        [::std::mem::offset_of!(kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall, in_rsi) - 72usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall::in_r8"]
+        [::std::mem::offset_of!(kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall, in_r8) - 80usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall::in_r9"]
+        [::std::mem::offset_of!(kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall, in_r9) - 88usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall::in_rdx"]
+        [::std::mem::offset_of!(kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall, in_rdx) - 96usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall::out_r11"]
+        [::std::mem::offset_of!(kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall, out_r11) - 112usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall::out_r12"]
+        [::std::mem::offset_of!(kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall, out_r12) - 120usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall::out_r13"]
+        [::std::mem::offset_of!(kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall, out_r13) - 128usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall::out_r14"]
+        [::std::mem::offset_of!(kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall, out_r14) - 136usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall::out_r15"]
+        [::std::mem::offset_of!(kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall, out_r15) - 144usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall::out_rbx"]
+        [::std::mem::offset_of!(kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall, out_rbx) - 152usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall::out_rdi"]
+        [::std::mem::offset_of!(kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall, out_rdi) - 160usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall::out_rsi"]
+        [::std::mem::offset_of!(kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall, out_rsi) - 168usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall::out_r8"]
+        [::std::mem::offset_of!(kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall, out_r8) - 176usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall::out_r9"]
+        [::std::mem::offset_of!(kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall, out_r9) - 184usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall::out_rdx"]
+        [::std::mem::offset_of!(kvm_tdx_exit__bindgen_ty_1_kvm_tdx_vmcall, out_rdx) - 192usize];
+};
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of kvm_tdx_exit__bindgen_ty_1"]
+        [::std::mem::size_of::<kvm_tdx_exit__bindgen_ty_1>() - 200usize];
+    ["Alignment of kvm_tdx_exit__bindgen_ty_1"]
+        [::std::mem::align_of::<kvm_tdx_exit__bindgen_ty_1>() - 8usize];
+    ["Offset of field: kvm_tdx_exit__bindgen_ty_1::vmcall"]
+        [::std::mem::offset_of!(kvm_tdx_exit__bindgen_ty_1, vmcall) - 0usize];
+};
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of kvm_tdx_exit"][::std::mem::size_of::<kvm_tdx_exit>() - 208usize];
+    ["Alignment of kvm_tdx_exit"][::std::mem::align_of::<kvm_tdx_exit>() - 8usize];
+    ["Offset of field: kvm_tdx_exit::type_"][::std::mem::offset_of!(kvm_tdx_exit, type_) - 0usize];
+    ["Offset of field: kvm_tdx_exit::pad"][::std::mem::offset_of!(kvm_tdx_exit, pad) - 4usize];
+    ["Offset of field: kvm_tdx_exit::u"][::std::mem::offset_of!(kvm_tdx_exit, u) - 8usize];
+};
